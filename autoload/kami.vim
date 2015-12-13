@@ -13,6 +13,10 @@ if !exists('g:kami#ext')
   let g:kami#ext = 'md'
 endif
 
+if !exists('g:kami#timestamp_format')
+  let g:kami#timestamp_format = '## %s'
+endif
+
 function! kami#filepath(name) abort
   let name = printf('%s.%s', a:name, g:kami#ext)
   return s:FP.join(g:kami#dir, name)
@@ -38,7 +42,7 @@ function! kami#move(from, to, name) abort
   let path = kami#filepath(a:name)
   let lines = getline(a:from, a:to)
   execute printf(':redir! >> %s', path)
-  silent! echo printf('// %s', s:DT.now().to_string())
+  silent! echo printf(g:kami#timestamp_format, s:DT.now().to_string())
   for line in lines
     silent! echo line
   endfor
