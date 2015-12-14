@@ -26,6 +26,11 @@ function! kami#open(name) abort
   execute printf(':e! %s', kami#filepath(a:name))
 endfunction
 
+function! kami#open_today() abort
+  let today = s:DT.now().strftime('%Y%m%d')
+  call kami#open(today)
+endfunction
+
 function! kami#list() abort
   let ext_len = len(g:kami#ext)
   let expr = s:FP.join(g:kami#dir, printf('*.%s', g:kami#ext))
