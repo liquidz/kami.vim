@@ -9,8 +9,8 @@ set cpo&vim
 let s:V = vital#of('kami')
 let s:FP = s:V.import('System.Filepath')
 
-command! KamiToday call kami#open_today()
 command! -nargs=1 -complete=customlist,CompletionMemo KamiOpen call kami#open(<q-args>)
+command! KamiOpenToday call kami#open_today()
 command! KamiOpenFromList call kami#open_from_list()
 command! -nargs=1 -range=% -complete=customlist,CompletionMemo KamiMove call kami#move(<line1>, <line2>, <q-args>)
 

@@ -5,17 +5,9 @@ let s:V = vital#of('kami')
 let s:FP = s:V.import('System.Filepath')
 let s:DT = s:V.import('DateTime')
 
-if !exists('g:kami#dir')
-  let g:kami#dir = s:FP.join($HOME, '.vim', 'memo')
-endif
-
-if !exists('g:kami#ext')
-  let g:kami#ext = 'md'
-endif
-
-if !exists('g:kami#timestamp_format')
-  let g:kami#timestamp_format = '## %s'
-endif
+let g:kami#dir = get(g:, 'kami#dir', s:FP.join($HOME, '.vim', 'memo'))
+let g:kami#ext = get(g:, 'kami#ext', 'md')
+let g:kami#timestamp_format = get(g:, 'kami#timestamp_format', '## %s')
 
 function! kami#filepath(name) abort
   let name = printf('%s.%s', a:name, g:kami#ext)
@@ -54,6 +46,11 @@ function! kami#move(from, to, name) abort
   silent! echo ''
   execute ':redir END'
   execute printf(':%d,%ddelete', a:from, a:to)
+endfunction
+
+function! kami#select() abort
+  let res = ctrlp#init(ctrlp#kami#id())
+  echomsg printf('select result = %d', res)
 endfunction
 
 let &cpo = s:save_cpo
